@@ -153,9 +153,12 @@
     <ClCompile Include="Libs\Include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Libs\Include\imgui\imgui_tables.cpp" />
     <ClCompile Include="Libs\Include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Libs\Include\imgui\spectrum.cpp" />
     <ClCompile Include="Libs\Include\stb\stb_image.cpp" />
-    <ClCompile Include="Log\Log.cpp" />
+    <ClCompile Include="Debug\Log\Log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Debug\Visuals\Menu\Menu.cpp" />
+    <ClCompile Include="Debug\Visuals\Visuals.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,8 +171,11 @@
     <ClInclude Include="Libs\Include\imgui\imstb_rectpack.h" />
     <ClInclude Include="Libs\Include\imgui\imstb_textedit.h" />
     <ClInclude Include="Libs\Include\imgui\imstb_truetype.h" />
+    <ClInclude Include="Libs\Include\imgui\spectrum.h" />
     <ClInclude Include="Libs\Include\stb\stb_image.h" />
-    <ClInclude Include="Log\Log.h" />
+    <ClInclude Include="Debug\Log\Log.h" />
+    <ClInclude Include="Debug\Visuals\Menu\Menu.h" />
+    <ClInclude Include="Debug\Visuals\Visuals.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

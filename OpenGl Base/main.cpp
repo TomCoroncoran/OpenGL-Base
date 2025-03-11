@@ -4,6 +4,7 @@
 #include <Imgui/imgui.h>
 
 #include "Window/Window.h"
+#include "Debug/Visuals/Visuals.h"
 
 int main()
 {    
@@ -18,10 +19,15 @@ int main()
 
     Window::Init(&window_config);
     
+    Debug::Visuals::Init();
+
     while (!Window::ShouldClose())
-    {
+    {   
         Window::Tick();
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        Debug::Visuals::Draw();
 
         glfwPollEvents();
     }

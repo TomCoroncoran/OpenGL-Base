@@ -2,7 +2,7 @@
 #include <GLAD/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "../Log/Log.h"
+#include "../Debug/Log/Log.h"
 
 void WindowConfig::AddHint(const int& name, const int& value)
 {
@@ -95,6 +95,37 @@ namespace Window
     GLFWmonitor* GetPrimaryMonitor()
     {
         return glfwGetPrimaryMonitor();
+    }
+
+    void SetPos(const glm::ivec2& pos)
+    {
+        Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__);
+
+        glfwSetWindowPos(window, pos.x, pos.y);
+    }
+
+    void SetSize(const glm::ivec2& size)
+    {
+        Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__);
+        
+        glfwSetWindowSize(window, size.x, size.y);
+    }
+
+    void SetFullscreen()
+    {
+        if (Debug::LogError(glfwGetWindowMonitor(window), "Window Is Already Fullscreen", __LINE__, __FILE__))
+            return;
+
+        glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), pos.x, pos.y, size.x, size.y, GLFW_DONT_CARE);
+    }
+
+    void SetWindowed()
+    {
+        if (Debug::LogError(glfwGetWindowMonitor(window) == nullptr, "Window Is Already Windowed", __LINE__, __FILE__))
+            return;
+    
+        glfwSetWindowMonitor(window, nullptr, pos.x, pos.y, size.x, size.y, GLFW_DONT_CARE);
+
     }
 
     void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)

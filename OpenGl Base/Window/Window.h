@@ -54,9 +54,10 @@ namespace Window
     GLFWwindow* GetGLFWWindow();
     GLFWmonitor* GetPrimaryMonitor();
 
-    void ToggleFullscreen();
+    void SetPos(const glm::ivec2& pos);
+    void SetSize(const glm::ivec2& size);
 
-
-
+    void SetFullscreen();
+    void SetWindowed();
 }
 
