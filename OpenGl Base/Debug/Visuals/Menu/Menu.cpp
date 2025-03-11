@@ -54,7 +54,6 @@ namespace Debug
 
                 bool fullscreen_pending_update = ImGui::Checkbox("Fullscreen", &Window::fullscreen);
 
-
                 if (update_window_pos) Window::SetPos(window_pos);
                 if (update_window_size) Window::SetSize(window_size);
 
