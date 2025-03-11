@@ -26,6 +26,8 @@ namespace Window
         Debug::Assert(config, "WindowConfig* Invalid", __LINE__, __FILE__);
         Debug::Assert(glfwInit(), "GLFW Failed To Initialize", __LINE__, __FILE__);
 
+        fullscreen = config->fullscreen;
+
         for (const WindowHint& hint : config->hints)
         {
             glfwWindowHint(hint.name, hint.value);
@@ -113,7 +115,7 @@ namespace Window
 
     void SetFullscreen()
     {
-        if (Debug::LogError(glfwGetWindowMonitor(window), "Window Is Already Fullscreen", __LINE__, __FILE__))
+        if (Debug::LogError(glfwGetWindowMonitor(window) == nullptr, "Window Is Already Fullscreen", __LINE__, __FILE__))
             return;
 
         glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), pos.x, pos.y, size.x, size.y, GLFW_DONT_CARE);
@@ -121,11 +123,10 @@ namespace Window
 
     void SetWindowed()
     {
-        if (Debug::LogError(glfwGetWindowMonitor(window) == nullptr, "Window Is Already Windowed", __LINE__, __FILE__))
+        if (Debug::LogError(glfwGetWindowMonitor(window) != nullptr, "Window Is Already Windowed", __LINE__, __FILE__))
             return;
-    
-        glfwSetWindowMonitor(window, nullptr, pos.x, pos.y, size.x, size.y, GLFW_DONT_CARE);
 
+        glfwSetWindowMonitor(window, nullptr, 100, 100, size.x, size.y, GLFW_DONT_CARE);
     }
 
     void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)

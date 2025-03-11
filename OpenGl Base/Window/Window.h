@@ -43,6 +43,8 @@ struct WindowConfig
 
 namespace Window
 {
+    inline bool fullscreen = false;
+
     void Init(WindowConfig* config);
 
     bool ShouldClose();
