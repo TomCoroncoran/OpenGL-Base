@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include "../Debug/Log/Log.h"
+#include "../../Input/Input.h"
 
 void WindowConfig::AddHint(const int& name, const int& value)
 {
@@ -16,6 +17,10 @@ namespace Window
     glm::ivec2 size = {  };
     glm::ivec2 pos = {  };
     glm::ivec2 framebuffer_size = {  };
+
+    double delta_time = {  };
+
+    void UpdateDeltaTime();
 
     void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
     void SizeCallback(GLFWwindow* window, int width, int height);
@@ -70,7 +75,12 @@ namespace Window
     void Tick()
     {
         Debug::LogError(window, "Window Not Valid. Did You Forget To Call Window::Init()", __LINE__, __FILE__);
-    
+        
+        UpdateDeltaTime();
+
+        if (Input::WasKeyJustPressed(CLOSE_APPLICATION))
+            glfwSetWindowShouldClose(window, true);
+
         glfwSwapBuffers(window);
     }
 
@@ -97,6 +107,11 @@ namespace Window
     GLFWmonitor* GetPrimaryMonitor()
     {
         return glfwGetPrimaryMonitor();
+    }
+
+    double GetDeltaTime()
+    {
+        return delta_time;
     }
 
     void SetPos(const glm::ivec2& pos)
@@ -127,6 +142,16 @@ namespace Window
             return;
 
         glfwSetWindowMonitor(window, nullptr, 100, 100, size.x, size.y, GLFW_DONT_CARE);
+    }
+
+    void UpdateDeltaTime()
+    {
+        static double last_time = glfwGetTime();
+        double current_time = glfwGetTime();
+        
+        delta_time = current_time - last_time;
+
+        last_time = current_time;
     }
 
     void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)

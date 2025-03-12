@@ -55,6 +55,7 @@ namespace Window
     glm::ivec2 GetFrameBufferSize();
     GLFWwindow* GetGLFWWindow();
     GLFWmonitor* GetPrimaryMonitor();
+    double GetDeltaTime();
 
     void SetPos(const glm::ivec2& pos);
     void SetSize(const glm::ivec2& size);

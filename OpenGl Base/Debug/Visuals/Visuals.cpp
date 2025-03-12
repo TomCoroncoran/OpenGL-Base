@@ -6,6 +6,7 @@
 
 #include "../../Window/Window.h"
 #include "menu/Menu.h"
+#include "Hud/Hud.h"
 
 
 namespace Debug
@@ -33,6 +34,7 @@ namespace Debug
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
+            Hud::DrawHud();
             Menu::Draw();
 
             ImGui::Render();

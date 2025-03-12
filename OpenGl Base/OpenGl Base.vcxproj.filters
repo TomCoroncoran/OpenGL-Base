@@ -60,6 +60,12 @@
     <ClCompile Include="Libs\Include\imgui\spectrum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Input\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\Visuals\Hud\Hud.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libs\Include\imgui\imconfig.h">
@@ -105,6 +111,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Libs\Include\imgui\spectrum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Keybinds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug\Visuals\Hud\Hud.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

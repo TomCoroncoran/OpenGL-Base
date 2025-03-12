@@ -4,6 +4,7 @@
 #include <Imgui/imgui.h>
 
 #include "Window/Window.h"
+#include "Input/Input.h"
 #include "Debug/Visuals/Visuals.h"
 
 int main()
@@ -19,6 +20,8 @@ int main()
 
     Window::Init(&window_config);
     
+    Input::Init();
+
     Debug::Visuals::Init();
 
     while (!Window::ShouldClose())
@@ -29,7 +32,7 @@ int main()
 
         Debug::Visuals::Draw();
 
-        glfwPollEvents();
+        Input::PollEvents();
     }
     
     return 0;

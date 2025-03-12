@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Debug\Visuals\Hud\Hud.cpp" />
+    <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Libs\Include\glad\glad.c" />
     <ClCompile Include="Libs\Include\imgui\imgui.cpp" />
     <ClCompile Include="Libs\Include\imgui\imgui_demo.cpp" />
@@ -162,6 +164,9 @@
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Debug\Visuals\Hud\Hud.h" />
+    <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Input\Keybinds.h" />
     <ClInclude Include="Libs\Include\imgui\imconfig.h" />
     <ClInclude Include="Libs\Include\imgui\imgui.h" />
     <ClInclude Include="Libs\Include\imgui\imgui_impl_glfw.h" />
