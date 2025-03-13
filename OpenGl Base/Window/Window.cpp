@@ -5,7 +5,7 @@
 #include "../Debug/Log/Log.h"
 #include "../../Input/Input.h"
 
-void WindowConfig::AddHint(const int& name, const int& value)
+void WindowConfig::AddHint(int name,int value)
 {
     hints.emplace_back(WindowHint{name, value});
 }
@@ -39,7 +39,7 @@ namespace Window
         }
 
         GLFWmonitor* monitor = nullptr;
-        if (config->fullscreen)
+        if (fullscreen)
         {
             monitor = glfwGetPrimaryMonitor();
             Debug::LogError(monitor, "GLFW Failed To Get Primary Monitor", __LINE__, __FILE__);
@@ -57,6 +57,8 @@ namespace Window
         glfwSetWindowSizeCallback(window, SizeCallback);
         glfwSetWindowPosCallback(window, PosCallback);
 
+        // Initializing size, pos and framebuffer_size so we dont have to wait on first callback for each
+        // in order for them to be valid
         glfwGetWindowPos(window, &pos.x, &pos.y);
         glfwGetFramebufferSize(window, &framebuffer_size.x, &framebuffer_size.y);
         glfwGetWindowSize(window, &size.x, &size.y);
@@ -69,17 +71,18 @@ namespace Window
         if (Debug::LogError(window, "Window Not Valid. Did You Forget To Call Window::Init()", __LINE__, __FILE__))
             return true;
 
+        if (Input::WasKeyJustPressed(CLOSE_APPLICATION))
+            glfwSetWindowShouldClose(window, true);
+
         return glfwWindowShouldClose(window);
     }
 
     void Tick()
     {
-        Debug::LogError(window, "Window Not Valid. Did You Forget To Call Window::Init()", __LINE__, __FILE__);
-        
-        UpdateDeltaTime();
+        if (Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__))
+            return;
 
-        if (Input::WasKeyJustPressed(CLOSE_APPLICATION))
-            glfwSetWindowShouldClose(window, true);
+        UpdateDeltaTime();
 
         glfwSwapBuffers(window);
     }
@@ -106,7 +109,12 @@ namespace Window
 
     GLFWmonitor* GetPrimaryMonitor()
     {
-        return glfwGetPrimaryMonitor();
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        
+        if (Debug::LogError(monitor, "GLFW Failed To Get Primary Monitor", __LINE__, __FILE__))
+            return nullptr;
+
+        return monitor;
     }
 
     double GetDeltaTime()
@@ -116,20 +124,28 @@ namespace Window
 
     void SetPos(const glm::ivec2& pos)
     {
-        Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__);
+        if (Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__))
+            return;
 
         glfwSetWindowPos(window, pos.x, pos.y);
     }
 
     void SetSize(const glm::ivec2& size)
     {
-        Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__);
+        if (Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__))
+            return;
         
+        if (Debug::LogError(size.x > 0 && size.y > 0, "Window Size Must Be Positive", __LINE__, __FILE__))
+            return;
+
         glfwSetWindowSize(window, size.x, size.y);
     }
 
     void SetFullscreen()
     {
+        if (Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__))
+            return;
+        
         if (Debug::LogError(glfwGetWindowMonitor(window) == nullptr, "Window Is Already Fullscreen", __LINE__, __FILE__))
             return;
 
@@ -138,6 +154,9 @@ namespace Window
 
     void SetWindowed()
     {
+        if (Debug::LogError(window, "Window Invalid. Did You Forget To Call Window::Init()", __LINE__, __FILE__))
+            return;
+        
         if (Debug::LogError(glfwGetWindowMonitor(window) != nullptr, "Window Is Already Windowed", __LINE__, __FILE__))
             return;
 
@@ -159,16 +178,23 @@ namespace Window
         framebuffer_size.x = width;
         framebuffer_size.y = height;
         
+        glViewport(0, 0, framebuffer_size.x, framebuffer_size.y);
+
+        if (!log_framebuffer_size_callbacks)
+            return;
+
         std::string status = "Window Framebuffer Size Updated: \n    Width: " + std::to_string(framebuffer_size.x) + "\n    Height: " + std::to_string(framebuffer_size.x);
         Debug::LogStatus(status);
-
-        glViewport(0, 0, framebuffer_size.x, framebuffer_size.y);
     }
 
     void SizeCallback(GLFWwindow* window, int width, int height)
     {
         size.x = width;
         size.y = height;
+
+        if (!log_size_callbacks)
+            return;
+
         std::string status = "Window Size Updated: \n    Width: " + std::to_string(size.x) + "\n    Height: " + std::to_string(size.y);
         Debug::LogStatus(status);
     }
@@ -178,6 +204,9 @@ namespace Window
         pos.x = x;
         pos.y = y;
         
+        if (!log_pos_callbacks)
+            return;
+
         std::string status = "Window Position Updated: \n    X: " + std::to_string(pos.x) + "\n    Y: " + std::to_string(pos.y);
         Debug::LogStatus(status);
     }

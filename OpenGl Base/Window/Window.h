@@ -38,18 +38,40 @@ struct WindowConfig
     std::string title = { "Window"};
     std::vector<WindowHint> hints;
 
-    void AddHint(const int& name, const int& value);
+    void AddHint(int name, int value);
 };
 
 namespace Window
 {
+    // Has to be exposed in the header for ImGui to access it. 
     inline bool fullscreen = false;
 
+    inline bool log_pos_callbacks = false;
+    inline bool log_size_callbacks = true;
+    inline bool log_framebuffer_size_callbacks = true;
+
+    //-----------------------------------------<>-----------------------------------------//
+    // Function to init the application window.
+    // WindowConfig* config - A Pointer to a WindowConfig struct. This must be valid or the
+    //  program will exit.
+    //-----------------------------------------<>-----------------------------------------//
     void Init(WindowConfig* config);
 
+    //-----------------------------------------<>-----------------------------------------//
+    // Function To Check if the application window should close.
+    // Return - Will return true the application window should close.
+    //-----------------------------------------<>-----------------------------------------//
     bool ShouldClose();
+
+    //-----------------------------------------<>-----------------------------------------//
+    // Function to update the window. Should be called every single time you wish to update
+    // the window. Generally once per application tick.
+    //-----------------------------------------<>-----------------------------------------//
     void Tick();
 
+    //-----------------------------------------<>-----------------------------------------//
+    // Basic getter functions.
+    //-----------------------------------------<>-----------------------------------------//
     glm::ivec2 GetPos();
     glm::ivec2 GetSize();
     glm::ivec2 GetFrameBufferSize();
@@ -57,9 +79,24 @@ namespace Window
     GLFWmonitor* GetPrimaryMonitor();
     double GetDeltaTime();
 
+    //-----------------------------------------<>-----------------------------------------//
+    // Function to change the position of the window. Can take any values both negative and
+    // positive. Will only change the position of the window if the new position is a valid
+    // screen coordinate.
+    // glm::ivec2 pos - The new position of the window.
+    //-----------------------------------------<>-----------------------------------------//
     void SetPos(const glm::ivec2& pos);
+
+    //-----------------------------------------<>-----------------------------------------//
+    // Function to change the size of the window. Will only take positive values. Will fail
+    // to update the window if the values are not valid
+    // glm::ivec2 size - The new size of the window.
+    //-----------------------------------------<>-----------------------------------------//
     void SetSize(const glm::ivec2& size);
 
+    //-----------------------------------------<>-----------------------------------------//
+    // Functions to set the window to fullscreen or windowed respectfully
+    //-----------------------------------------<>-----------------------------------------//
     void SetFullscreen();
     void SetWindowed();
 }

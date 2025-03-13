@@ -65,7 +65,34 @@ namespace Debug
 
             void DrawInputOverlay()
             {
+                glm::dvec2 mouse_pos = Input::GetMousePosition();
+                glm::dvec2 mouse_delta = Input::GetMouseDelta();
+                double scroll_delta = Input::GetScrollDelta();
+                
+                std::string mouse_pos_text = "Mouse Position: X: " + std::to_string(mouse_pos.x) + "\n" +
+                    "                Y: " + std::to_string(mouse_pos.y);
+
+                std::string mouse_delta_text = "Mouse Delta: X: " + std::to_string(mouse_delta.x) + "\n" +
+                    "             Y: " + std::to_string(mouse_delta.y);
+
+                std::string scroll_delta_text = "Scroll Delta: " + std::to_string(scroll_delta);
+                
                 ImGui::TextColored(ImVec4{ 255, 255, 255, 255 }, "Input Overlay");
+                ImGui::TextColored(ImVec4{ 255, 255, 255, 255 }, mouse_pos_text.c_str());
+                ImGui::TextColored(ImVec4{ 255, 255, 255, 255 }, mouse_delta_text.c_str());
+                ImGui::TextColored(ImVec4{ 255, 255, 255, 255 }, scroll_delta_text.c_str());
+
+                for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST; ++i)
+                {
+                    if (Input::IsMouseButtonDown(i))
+                    {
+                        std::string text = Input::GetMouseButtonName(i);
+                        text += ": ";
+                        text += std::to_string(Input::GetTimeSinceMouseButtonPressed(i));
+
+                        ImGui::TextColored(ImVec4{ 255, 255, 255, 255 }, text.c_str());
+                    }
+                }
 
                 for (int i = 0; i < GLFW_KEY_LAST; ++i)
                 {

@@ -85,15 +85,17 @@ namespace Debug
                 glm::ivec2 window_size = Window::GetSize();
                 
                 if (ImGui::InputInt2("Window Position", &window_pos.x)) Window::SetPos(window_pos);
-                if (ImGui::InputInt2("Window Size", &window_size.x)) Window::SetSize(window_pos);
+                if (ImGui::InputInt2("Window Size", &window_size.x)) Window::SetSize(window_size);
 
                 bool fullscreen_pending_update = ImGui::Checkbox("Fullscreen", &Window::fullscreen);
                 
                 ImGui::Checkbox("FPS Counter", &Hud::fps_counter);
                 ImGui::Checkbox("Frame Buffer Size", &Hud::frame_buffer_size);
+
+                ImGui::Checkbox("Log Position Callbacks", &Window::log_pos_callbacks);
+                ImGui::Checkbox("Log Size Callbacks", &Window::log_size_callbacks);
+                ImGui::Checkbox("Log Framebuffer Size Callbacks", &Window::log_framebuffer_size_callbacks);
                 
-
-
                 if (fullscreen_pending_update)
                 {
                     if (Window::fullscreen)
@@ -109,7 +111,7 @@ namespace Debug
 
             void DrawOverlaysTab()
             {
-                ImGui::Checkbox("FPS Counter", &Hud::input_overlay);
+                ImGui::Checkbox("InputOverlay", &Hud::input_overlay);
             }
         }
     }

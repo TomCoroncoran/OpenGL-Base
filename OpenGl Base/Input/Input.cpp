@@ -12,10 +12,20 @@ namespace Input
         bool released;
         double time_pressed;
     };
-    
+
     std::array<Key, GLFW_KEY_LAST> keys;
+    std::array<Key, GLFW_MOUSE_BUTTON_LAST> mouse_buttons;
+
+    glm::dvec2 mouse_pos = {  };
+    glm::dvec2 mouse_delta = {  };
+    double scroll_delta = {  };
+    double scroll_offset = {  };
 
     void KeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods);
+    static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
+    void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+    void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+
 
     void Init()
     {
@@ -26,36 +36,97 @@ namespace Input
             key.time_pressed = 0.0;
         }
 
+        for (Key& key : mouse_buttons)
+        {
+            key.pressed = false;
+            key.released = true;
+            key.time_pressed = 0.0;
+        }
+
         GLFWwindow* window = Window::GetGLFWWindow();
         Debug::Assert(window, "Window::GetGLFWWindow() Returned Nullptr", __LINE__, __FILE__);
         
+        if (glfwRawMouseMotionSupported())
+            glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+        
+
         glfwSetKeyCallback(window, KeyCallBack);
+        glfwSetCursorPosCallback(window, CursorPositionCallback);
+        glfwSetMouseButtonCallback(window, MouseButtonCallback);
+        glfwSetScrollCallback(window, ScrollCallback);
     }
 
-    void PollEvents()
+    void Tick()
     {
+        static glm::dvec2 last_mouse_pos = mouse_pos;
+        mouse_delta = mouse_pos - last_mouse_pos;
+        last_mouse_pos = mouse_pos;
+
+        scroll_delta = scroll_offset;
+        scroll_offset = 0.0;
+
         glfwPollEvents();
     }
 
-    void SetCursorMode(GLenum cursor_enabled)
+    void SetCursorMode(int mode)
     {
         GLFWwindow* window = Window::GetGLFWWindow();
         if (Debug::LogError(window, "Window::GetGLFWWindow() Returned Nullptr", __LINE__, __FILE__))
             return;
 
-        glfwSetInputMode(window, GLFW_CURSOR, cursor_enabled);
+        glfwSetInputMode(window, GLFW_CURSOR, mode);
     }
 
     glm::dvec2 GetMousePosition()
     {
-        glm::dvec2 pos = { -1.0, -1.0 };
-        
-        GLFWwindow* window = Window::GetGLFWWindow();
-        if (Debug::LogError(window, "Window::GetGLFWWindow() Returned Nullptr", __LINE__, __FILE__))
-            return pos;
-        
-        glfwGetCursorPos(window, &pos.x, &pos.y);
-        return pos;
+        return mouse_pos;
+    }
+
+    glm::dvec2 GetMouseDelta()
+    {
+        return mouse_delta;
+    }
+
+    double GetScrollDelta()
+    {
+        return scroll_delta;
+    }
+
+    bool IsMouseButtonDown(int button)
+    {
+        return mouse_buttons[button].pressed;
+    }
+
+    double GetTimeSinceMouseButtonPressed(int button)
+    {
+        return glfwGetTime() - mouse_buttons[button].time_pressed;
+    }
+
+    std::string GetMouseButtonName(int button)
+    {
+        switch (button)
+        {
+        case(GLFW_MOUSE_BUTTON_4): return "Mouse Button 4";
+        case(GLFW_MOUSE_BUTTON_5): return "Mouse Button 5";
+        case(GLFW_MOUSE_BUTTON_6): return "Mouse Button 6";
+        case(GLFW_MOUSE_BUTTON_7): return "Mouse Button 7";
+        case(GLFW_MOUSE_BUTTON_8): return "Mouse Button 8";
+        case(GLFW_MOUSE_BUTTON_LEFT): return "Mouse Button Left";
+        case(GLFW_MOUSE_BUTTON_RIGHT): return "Mouse Button Right";
+        case(GLFW_MOUSE_BUTTON_MIDDLE): return "Mouse Button Middle";
+        default: return "Mouse Button Unknown";
+        }
+    }
+
+    bool WasMouseButtonJustPressed(int button)
+    {
+        if (mouse_buttons[button].pressed && mouse_buttons[button].released)
+        {
+            mouse_buttons[button].released = false;
+            return true;
+        }
+
+        return false;
     }
 
     bool IsKeyDown(int key)
@@ -187,5 +258,31 @@ namespace Input
             keys[key].pressed = false;
             keys[key].time_pressed = 0;
         }
+    }
+
+    static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
+    {
+        mouse_pos.x = xpos;
+        mouse_pos.y = ypos;
+    }
+
+    void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+    {
+        if (action == GLFW_PRESS)
+        {
+            mouse_buttons[button].pressed = true;
+            mouse_buttons[button].time_pressed = glfwGetTime();
+        }
+        else if (action == GLFW_RELEASE)
+        {
+            mouse_buttons[button].released = true;
+            mouse_buttons[button].pressed = false;
+            mouse_buttons[button].time_pressed = 0;
+        }
+    }
+
+    void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+    {
+        scroll_offset += yoffset;
     }
 }
