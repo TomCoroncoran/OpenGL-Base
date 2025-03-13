@@ -12,6 +12,11 @@ void WindowConfig::AddHint(int name,int value)
 
 namespace Window
 {
+    // Constants
+    constexpr int DefaultWindowPosX = 100;
+    constexpr int DefaultWindowPosY = 100;
+    
+    // Variables
     GLFWwindow* window = {  };
     
     glm::ivec2 size = {  };
@@ -20,6 +25,7 @@ namespace Window
 
     double delta_time = {  };
 
+    // Function Declarations
     void UpdateDeltaTime();
 
     void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -160,7 +166,7 @@ namespace Window
         if (Debug::LogError(glfwGetWindowMonitor(window) != nullptr, "Window Is Already Windowed", __LINE__, __FILE__))
             return;
 
-        glfwSetWindowMonitor(window, nullptr, 100, 100, size.x, size.y, GLFW_DONT_CARE);
+        glfwSetWindowMonitor(window, nullptr, DefaultWindowPosX, DefaultWindowPosY, size.x, size.y, GLFW_DONT_CARE);
     }
 
     void UpdateDeltaTime()

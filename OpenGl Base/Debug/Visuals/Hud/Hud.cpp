@@ -15,8 +15,9 @@ namespace Debug
             void DrawFrameBufferSize();
             void DrawInputOverlay();
 
-            void DrawHud()
+            void Draw()
             {
+                //creating a blank, inputless window to draw the HUD on
                 ImGuiViewport* viewport = ImGui::GetMainViewport();
 
                 ImGui::SetNextWindowPos(viewport->Pos);     
@@ -30,16 +31,12 @@ namespace Debug
                     ImGuiWindowFlags_NoScrollbar |
                     ImGuiWindowFlags_NoScrollWithMouse);
                 
-                if (fps_counter)
-                    DrawFpsCounter();
+                //drawing features
+                if (fps_counter) DrawFpsCounter();
+                if (frame_buffer_size)DrawFrameBufferSize();
+                if (input_overlay)DrawInputOverlay();
 
-                if (frame_buffer_size)
-                    DrawFrameBufferSize();
-
-                if (input_overlay)
-                    DrawInputOverlay();
-
-
+                //ending our borderless window
                 ImGui::End();
             }
 
@@ -56,9 +53,8 @@ namespace Debug
             {
                 glm::ivec2 frame_buffer_size = Window::GetFrameBufferSize();
 
-                std::string text = "Framebuffer Size:\n"
-                                   "   X: " + std::to_string(frame_buffer_size.x) + "\n" +
-                                   "   Y: " + std::to_string(frame_buffer_size.y);
+                std::string text = "Framebuffer Size: X: " + std::to_string(frame_buffer_size.x) + "\n" +
+                                   "                  Y: " + std::to_string(frame_buffer_size.y);
 
                 ImGui::TextColored(ImVec4{ 255, 255, 255, 255 }, text.c_str());
             }

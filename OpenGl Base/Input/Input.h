@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------<>-----------------------------------------//
-//Namespace for handing all input related tasks. Uses the GLFW Library.
+//Namespace for handling all input related tasks. Uses the GLFW Library.
 //-----------------------------------------<>-----------------------------------------//
 namespace Input
 {
@@ -19,7 +19,7 @@ namespace Input
 
     //-----------------------------------------<>-----------------------------------------//
     // Function to update internal workings of the namespace. Must be called each time your
-    // application udpates. Generally this is once whenever your window updates.
+    // application updates. Generally this is once whenever your window updates.
     //-----------------------------------------<>-----------------------------------------//
     void Tick();
 
@@ -80,10 +80,35 @@ namespace Input
     // GLFW_MOUSE_BUTTON
     //-----------------------------------------<>-----------------------------------------//
     bool WasMouseButtonJustPressed(int button);
-
+    
+    //-----------------------------------------<>-----------------------------------------//
+    // Function to see if a key is being held down.
+    // int key - The key that is being held. Can be any value from 
+    // GLFW_KEY
+    //-----------------------------------------<>-----------------------------------------//
     bool IsKeyDown(int key);
+
+    //-----------------------------------------<>-----------------------------------------//
+    // Function to get the elapsed time in seconds since a key was pressed.
+    // int key - The key that is being held. Can be any value from 
+    // GLFW_KEY
+    //-----------------------------------------<>-----------------------------------------//
     double GetTimeSinceKeyPressed(int key);
+
+    //-----------------------------------------<>-----------------------------------------//
+    // Function to get the name of a key.    
+    // int key - The key that is being held. Can be any value from 
+    // GLFW_KEY
+    //-----------------------------------------<>-----------------------------------------//
     std::string GetKeyName(int key);
+
+    //-----------------------------------------<>-----------------------------------------//
+    // Function to see if a key has just been pressed down. This function will
+    // return true for one Input::Tick() and will then return false even if the key is still
+    // being held down. Useful for actions that require a single input.    
+    // int key - The mouse button that is being clicked. Can be any value from 
+    // GLFW_KEY
+    //-----------------------------------------<>-----------------------------------------//
     bool WasKeyJustPressed(int key);
 };
 

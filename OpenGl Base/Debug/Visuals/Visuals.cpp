@@ -24,8 +24,6 @@ namespace Debug
 
             ImGui_ImplGlfw_InitForOpenGL(Window::GetGLFWWindow(), true);
             ImGui_ImplOpenGL3_Init("#version 330 core");
-
-            Menu::Init();
         }
 
         void Draw()
@@ -34,7 +32,7 @@ namespace Debug
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            Hud::DrawHud();
+            Hud::Draw();
             Menu::Draw();
 
             ImGui::Render();

@@ -5,6 +5,7 @@
 
 #include "Window/Window.h"
 #include "Input/Input.h"
+#include "Debug/Debug.h"
 #include "Debug/Visuals/Visuals.h"
 
 int main()
@@ -22,7 +23,7 @@ int main()
     
     Input::Init();
 
-    Debug::Visuals::Init();
+    Debug::Init();
 
     while (!Window::ShouldClose())
     {   
@@ -32,8 +33,6 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Debug::Visuals::Draw();
-
-        Input::PollEvents();
     }
     
     return 0;

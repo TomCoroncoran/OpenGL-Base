@@ -66,6 +66,9 @@
     <ClCompile Include="Debug\Visuals\Hud\Hud.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Debug\Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libs\Include\imgui\imconfig.h">
@@ -120,6 +123,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Debug\Visuals\Hud\Hud.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug\Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

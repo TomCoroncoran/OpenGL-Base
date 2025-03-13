@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Debug\Debug.cpp" />
     <ClCompile Include="Debug\Visuals\Hud\Hud.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Libs\Include\glad\glad.c" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Debug\Debug.h" />
     <ClInclude Include="Debug\Visuals\Hud\Hud.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Input\Keybinds.h" />

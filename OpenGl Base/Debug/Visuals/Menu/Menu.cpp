@@ -19,12 +19,6 @@ namespace Debug
             void DrawWindowTab();
             void DrawOverlaysTab();
 
-
-            void Init()
-            {
-
-            }
-
             void Draw()
             {
                 HandleInput();

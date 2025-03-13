@@ -22,12 +22,12 @@ struct WindowHint
 // as there default values to create a default GLFWwindow.
 // 
 // Vars:
-//  bool fullscreen - should the window be fullscreen upon initialisation
-//  glm::ivec2 size - size of the window upon initialisation
-//  glm::ivec2 pos - the position of the window upon initialization
-//  std::string title - the title of the window upon initialization
+//  bool fullscreen - should the window be fullscreen upon initialization.
+//  glm::ivec2 size - size of the window upon initialisation.
+//  glm::ivec2 pos - the position of the window upon initialization.
+//  std::string title - the title of the window upon initialization.
 //  std::vector<WindowHint> hints - a vector of GLFWWindowHints that will be used to set
-//                                 hint values of the window
+//                                 hint values of the window.
 // Funcs:
 //  WindowConfig::AddHint() - wrapper function for Vector::emplace_back()
 //-----------------------------------------<>-----------------------------------------//

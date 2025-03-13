@@ -6,7 +6,6 @@ namespace Debug
     {
         namespace Menu
         {
-            void Init();
             void Draw();
         }
     }

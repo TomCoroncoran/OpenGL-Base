@@ -13,14 +13,20 @@ namespace Input
         double time_pressed;
     };
 
-    std::array<Key, GLFW_KEY_LAST> keys;
-    std::array<Key, GLFW_MOUSE_BUTTON_LAST> mouse_buttons;
+    // Constants
+    constexpr int MaxKeys = GLFW_KEY_LAST;
+    constexpr int MaxMouseButtons = GLFW_MOUSE_BUTTON_LAST;
+
+    // Variables
+    std::array<Key, MaxKeys> keys;
+    std::array<Key, MaxMouseButtons> mouse_buttons;
 
     glm::dvec2 mouse_pos = {  };
     glm::dvec2 mouse_delta = {  };
     double scroll_delta = {  };
     double scroll_offset = {  };
 
+    // Function Declarations
     void KeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
     void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
