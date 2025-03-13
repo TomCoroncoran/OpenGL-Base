@@ -1,4 +1,4 @@
-# <ins>OpenGL Base Project</ins>
+# <ins>OpenGL-Base Project</ins>
 ## Overview
 This project is an OpenGL-based application that provides a framework for handling window creation, input management, and rendering using GLFW and GLAD libraries. It includes functionalities for managing window properties, handling user input (keyboard and mouse), and rendering graphics.
 ## Features
